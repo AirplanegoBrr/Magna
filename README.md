@@ -17,13 +17,19 @@
 
 # Plans
 
-[ ] Add prefix control to servers
+- [x] Add prefix control to servers
 
-[x] Add more ; 😎 
+- [] Add more ; 😎
 
-[ ] Add a Shop?
+- [ ] Add a Shop?
 
-[ ] More config things
+- [ ] More config things
+
+- [ ] Add star system
+
+- [ ] Change color of embed after upvotes
+
+- [ ] Change the upvote/downvote emojis
 
 
 # Updates

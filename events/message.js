@@ -1,16 +1,39 @@
+const fs = require("fs")
+
 module.exports = {
     name: 'message',
     execute(message, client, Discord) {
-        const { token, prefix, owner, debugMode } = require("../config.json");
+        const { token, owner, debugMode } = require("../config.json");
+        var { prefix } = require("../config.json")
+        var rawdata = fs.readFileSync('./data.json');
+
+        const member = message.author;
+        const guild = message.guild;
+
+        //Use
+        var data = JSON.parse(rawdata);
+
+        //Will add old data so we can edit it
+        var saveJson = data;
+
+        if (saveJson.servers){
+        }else{
+            saveJson.servers = {}
+            saveJson.servers[guild.id] = {}
+        }
+
+        if (saveJson.servers[guild.id].prefix){
+            prefix = saveJson.servers[guild.id].prefix
+        }
+
         if (message.author.bot) return;
         if (message.guild === null) {
             message.channel.send("Im sorry **BUT** this bot only works in servers! Have a good day!");
             return;
         }
+
         const args = message.content.slice(prefix.length).trim().split(/ +/);
         const command = args.shift().toLowerCase();
-        const member = message.author;
-        const guild = message.guild;
 
         if (debugMode == 1) {
             console.log(args);
