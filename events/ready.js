@@ -4,7 +4,7 @@ module.exports = {
         console.log(`Logged in as ${client.user.tag}!`);
         client.user.setActivity("m!help", {
             type: "LISTENING",
-            url: "https://www.twitch.tv/monstercat"
+            url: "https://www.twitch.tv/AirplaneGoBrr_"
         });
     },
 };
