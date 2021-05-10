@@ -26,8 +26,14 @@ module.exports = {
         console.log(saveJson.servers[guild.id].suggestChannel)
         guild.channels.cache.get(saveJson.servers[guild.id].suggestChannel).send(exampleEmbed)
             .then(function (message) {
-                message.react("👍")
-                message.react("👎")
+                if (saveJson.servers[guild.id].upvote || saveJson.servers[guild.id].downvote) {
+                    message.react(saveJson.servers[guild.id].upvote);
+                    message.react(saveJson.servers[guild.id].downvote);
+                } else {
+                    message.react("👍");
+                    message.react("👎");
+                }
+
             }).catch(function () {
                 //Something
             });

@@ -7,6 +7,12 @@ module.exports = {
         var { prefix } = require("../config.json")
         var rawdata = fs.readFileSync('./data.json');
 
+        if (message.author.bot) return;
+        if (message.guild === null) {
+            message.channel.send("Im sorry **BUT** this bot only works in servers! Have a good day!");
+            return;
+        }
+
         const member = message.author;
         const guild = message.guild;
 
@@ -26,11 +32,7 @@ module.exports = {
             prefix = saveJson.servers[guild.id].prefix
         }
 
-        if (message.author.bot) return;
-        if (message.guild === null) {
-            message.channel.send("Im sorry **BUT** this bot only works in servers! Have a good day!");
-            return;
-        }
+
 
         const args = message.content.slice(prefix.length).trim().split(/ +/);
         const command = args.shift().toLowerCase();

@@ -29,7 +29,7 @@
 
 - [ ] Change color of embed after upvotes
 
-- [ ] Change the upvote/downvote emojis
+- [x] Change the upvote/downvote emojis
 
 
 # Updates

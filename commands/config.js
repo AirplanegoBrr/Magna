@@ -16,13 +16,19 @@ module.exports = {
         var y = message.content.split(" ")
         var memberPermissions = message.member.permissions.toArray();
 
-        if (!memberPermissions.includes("MANAGE_CHANNELS") || !message.author.id=="250029754076495874"){
+        if (!memberPermissions.includes("MANAGE_CHANNELS") || !message.author.id == "250029754076495874") {
             message.channel.send("Error! You do not have MANAGE_CHANNELS permission!");
             return;
         };
 
         if (!x) {
-            message.channel.send("```diff\n+ Config options\n- suggestion_channel\n- prefix``` suggestion_channel isnt working atm")
+            message.channel.send("```diff\n+ Config options\n- suggestion_channel\n- prefix\n- upvote\n- downvote``` suggestion_channel isnt working atm")
+        } else {
+            if (saveJson.servers) {
+            } else {
+                saveJson.servers = {}
+                saveJson.servers[guild.id] = {}
+            }
         }
 
         if (y[1] == "prefix") {
@@ -36,14 +42,30 @@ module.exports = {
             }
         }
 
-        if (y[1] == "suggestion_channel"){
-            if (saveJson.servers){
-            }else{
-                saveJson.servers = {}
-                saveJson.servers[guild.id] = {}
-            }
+        if (y[1] == "suggestion_channel") {
             saveJson.servers[guild.id].suggestChannel = message.mentions.channels.first().id;
-            message.channel.send("Set suggest channel to: <#"+saveJson.servers[guild.id].suggestChannel+">");
+            message.channel.send("Set suggest channel to: <#" + saveJson.servers[guild.id].suggestChannel + ">");
+        }
+
+        if (y[1] == "upvote") {
+            if (!y[2]) {
+                saveJson.servers[guild.id].upvote = "👍"
+                message.channel.send("Upvote: " + saveJson.servers[guild.id].upvote)
+            } else {
+                saveJson.servers[guild.id].upvote = y[2]
+                message.channel.send("Upvote: " + saveJson.servers[guild.id].upvote);
+            }
+        }
+
+        if (y[1] == "downvote") {
+            if (!y[2]) {
+                saveJson.servers[guild.id].downvote = "👎"
+                message.channel.send("Downvote: " + saveJson.servers[guild.id].downvote)
+            } else {
+                saveJson.servers[guild.id].downvote = y[2]
+                message.channel.send("Downvote: " + saveJson.servers[guild.id].downvote)
+            }
+
         }
 
         var save = JSON.stringify(saveJson);
