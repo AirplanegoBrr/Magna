@@ -19,7 +19,7 @@
 
 - [x] Add prefix control to servers
 
-- [] Add more ; 😎
+- [ ] Add more ; 😎
 
 - [ ] Add a Shop?
 
@@ -33,6 +33,10 @@
 
 
 # Updates
+
+### 0.0.1.1
+
+- Prefix changing
 
 ### 0.0.1
 
