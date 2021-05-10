@@ -38,6 +38,8 @@
 
 - Prefix changing
 
+- Upvote/Downvote emoji change
+
 ### 0.0.1
 
 - Bot is on github
