@@ -11,14 +11,10 @@ module.exports = {
             const args = message.content.split(" ")
             const idUser = args[1]
             try {
-                const banList = await message.guild.fetchBans();
-                console.log(banList)
-
-                const bannedUser = banList.find(user => user.id === idUser);
-                console.log(bannedUser)
-                if (bannedUser){
+                if (await guild.fetchBan(idUser).catch(console.error)) {
                     message.guild.members.unban(idUser)
-                }else{
+                    message.channel.send("Member unbanned!")
+                } else {
                     message.channel.send("I was unable to find that person or they arent banned!")
                 }
             } catch (error) {
