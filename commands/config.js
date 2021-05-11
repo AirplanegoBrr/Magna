@@ -11,6 +11,14 @@ module.exports = {
         //Will add old data so we can edit it
         var saveJson = data;
 
+        if (saveJson.servers) {
+        } else {
+            saveJson.servers = {}
+        }
+        if (saveJson.servers[guild.id]) {
+        } else {
+            saveJson.servers[guild.id] = {}
+        }
 
         var x = message.content.split(" ").slice(1).join(" ")
         var y = message.content.split(" ")
@@ -42,11 +50,6 @@ module.exports = {
             }
         }
 
-        if (y[1] == "suggestion_channel") {
-            saveJson.servers[guild.id].suggestChannel = message.mentions.channels.first().id;
-            message.channel.send("Set suggest channel to: <#" + saveJson.servers[guild.id].suggestChannel + ">");
-        }
-
         if (y[1] == "upvote") {
             if (!y[2]) {
                 saveJson.servers[guild.id].upvote = "👍"
@@ -68,7 +71,18 @@ module.exports = {
 
         }
 
+        if (y[1] == "suggestion_channel") {
+            saveJson.servers[guild.id].suggestChannel = message.mentions.channels.first().id;
+            message.channel.send("Set suggest channel to: <#" + saveJson.servers[guild.id].suggestChannel + ">");
+            save(saveJson);
+        }
+        
         var save = JSON.stringify(saveJson);
         fs.writeFileSync('./data.json', save);
+
+        function save(saveJson) {
+            var save = JSON.stringify(saveJson);
+            fs.writeFileSync('./data.json', save);
+        }
     }
 }

@@ -25,11 +25,9 @@ module.exports = {
         if (saveJson.servers){
         }else{
             saveJson.servers = {}
-            saveJson.servers[guild.id] = {}
         }
         if (saveJson.servers[guild.id]){
         }else{
-            saveJson.servers = {}
             saveJson.servers[guild.id] = {}
         }
 

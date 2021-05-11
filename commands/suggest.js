@@ -7,7 +7,6 @@ module.exports = {
         var rawdata = fs.readFileSync('./data.json');
         //Use
         var data = JSON.parse(rawdata);
-        console.log(data);
 
         //Will add old data so we can edit it
         var saveJson = data;
@@ -23,7 +22,6 @@ module.exports = {
             .setTimestamp()
             .setFooter('Bot by !!AirplaneGoBrr!!#1613', 'https://cdn.discordapp.com/avatars/250029754076495874/bdf3953b71edb421776e43d24e7651fe.webp');
 
-        console.log(saveJson.servers[guild.id].suggestChannel)
         guild.channels.cache.get(saveJson.servers[guild.id].suggestChannel).send(exampleEmbed)
             .then(function (message) {
                 if (saveJson.servers[guild.id].upvote || saveJson.servers[guild.id].downvote) {
