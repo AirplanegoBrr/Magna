@@ -27,6 +27,11 @@ module.exports = {
             saveJson.servers = {}
             saveJson.servers[guild.id] = {}
         }
+        if (saveJson.servers[guild.id]){
+        }else{
+            saveJson.servers = {}
+            saveJson.servers[guild.id] = {}
+        }
 
         if (saveJson.servers[guild.id].prefix){
             prefix = saveJson.servers[guild.id].prefix
@@ -59,5 +64,8 @@ module.exports = {
             console.error(error);
             message.reply(`there was an error trying to execute that command!`);
         }
+
+        var save = JSON.stringify(saveJson);
+        fs.writeFileSync('./data.json', save);
     },
 };
