@@ -37,7 +37,7 @@ module.exports = {
                 saveJson.servers[guild.id].prefix = prefix;
                 message.channel.send("The prefix is now: " + saveJson.servers[guild.id].prefix);
             } else {
-                saveJson.servers[guild.id].prefix = y[2];
+                saveJson.servers[guild.id].prefix = y[2]
                 message.channel.send("The prefix is now: " + saveJson.servers[guild.id].prefix);
             }
         }
@@ -50,20 +50,20 @@ module.exports = {
         if (y[1] == "upvote") {
             if (!y[2]) {
                 saveJson.servers[guild.id].upvote = "👍"
-                message.channel.send("Upvote: " + saveJson.servers[guild.id].upvote)
+                message.channel.send("Upvote: " + saveJson.servers[guild.id].upvote);
             } else {
-                saveJson.servers[guild.id].upvote = y[2]
+                saveJson.servers[guild.id].upvote = y[2];
                 message.channel.send("Upvote: " + saveJson.servers[guild.id].upvote);
             }
         }
 
         if (y[1] == "downvote") {
             if (!y[2]) {
-                saveJson.servers[guild.id].downvote = "👎"
-                message.channel.send("Downvote: " + saveJson.servers[guild.id].downvote)
+                saveJson.servers[guild.id].downvote = "👎";
+                message.channel.send("Downvote: " + saveJson.servers[guild.id].downvote);
             } else {
-                saveJson.servers[guild.id].downvote = y[2]
-                message.channel.send("Downvote: " + saveJson.servers[guild.id].downvote)
+                saveJson.servers[guild.id].downvote = y[2];
+                message.channel.send("Downvote: " + saveJson.servers[guild.id].downvote);
             }
 
         }

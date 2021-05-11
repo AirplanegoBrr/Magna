@@ -12,7 +12,7 @@ module.exports = {
         //Will add old data so we can edit it
         var saveJson = data;
 
-        var x = message.content.split(" ").slice(1).join(" ")
+        var x = message.content.split(" ").slice(1).join(" ");
 
         const exampleEmbed = new Discord.MessageEmbed()
             .setColor('#0099ff')
@@ -37,6 +37,6 @@ module.exports = {
             }).catch(function () {
                 //Something
             });
-        message.channel.send("Done! Added suggestion! Check it out here: <#" + saveJson.servers[guild.id].suggestChannel + ">")
+        message.channel.send("Done! Added suggestion! Check it out here: <#" + saveJson.servers[guild.id].suggestChannel + ">");
     }
 }

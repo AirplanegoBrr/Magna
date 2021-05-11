@@ -13,9 +13,9 @@ module.exports = {
             try {
                 if (await guild.fetchBan(idUser).catch(console.error)) {
                     message.guild.members.unban(idUser)
-                    message.channel.send("Member unbanned!")
+                    message.channel.send("Member unbanned!");
                 } else {
-                    message.channel.send("I was unable to find that person or they arent banned!")
+                    message.channel.send("I was unable to find that person or they arent banned!");
                 }
             } catch (error) {
                 console.error(error)
