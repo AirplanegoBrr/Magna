@@ -36,6 +36,7 @@ module.exports = {
             } else {
                 saveJson.servers = {}
                 saveJson.servers[guild.id] = {}
+                save(saveJson);
             }
         }
 
@@ -48,6 +49,7 @@ module.exports = {
                 saveJson.servers[guild.id].prefix = y[2]
                 message.channel.send("The prefix is now: " + saveJson.servers[guild.id].prefix);
             }
+            save(saveJson);
         }
 
         if (y[1] == "upvote") {
@@ -58,6 +60,7 @@ module.exports = {
                 saveJson.servers[guild.id].upvote = y[2];
                 message.channel.send("Upvote: " + saveJson.servers[guild.id].upvote);
             }
+            save(saveJson);
         }
 
         if (y[1] == "downvote") {
@@ -68,21 +71,30 @@ module.exports = {
                 saveJson.servers[guild.id].downvote = y[2];
                 message.channel.send("Downvote: " + saveJson.servers[guild.id].downvote);
             }
+            save(saveJson);
 
         }
 
         if (y[1] == "suggestion_channel") {
             saveJson.servers[guild.id].suggestChannel = message.mentions.channels.first().id;
             message.channel.send("Set suggest channel to: <#" + saveJson.servers[guild.id].suggestChannel + ">");
+            console.log("good")
             save(saveJson);
         }
-        
-        var save = JSON.stringify(saveJson);
-        fs.writeFileSync('./data.json', save);
+
+        save(saveJson);
 
         function save(saveJson) {
             var save = JSON.stringify(saveJson);
-            fs.writeFileSync('./data.json', save);
+            //fs.writeFileSync("./data.json", save);
+            
+            fs.writeFile('./data.json', save, err => {
+                if (err) {
+                  console.error(err)
+                  return
+                }
+                //file written successfully
+              })
         }
     }
 }
