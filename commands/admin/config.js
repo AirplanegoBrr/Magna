@@ -4,7 +4,7 @@ module.exports = {
     name: 'config',
     description: 'config command.',
     execute(client, Discord, message, guild) {
-        var rawdata = fs.readFileSync('./data.json');
+        var rawdata = fs.readFileSync('../data.json');
         //Use
         var data = JSON.parse(rawdata);
 
@@ -42,7 +42,7 @@ module.exports = {
 
         if (y[1] == "prefix") {
             if (!y[2]) {
-                var { prefix } = require("../config.json")
+                var { prefix } = require("../../config.json")
                 saveJson.servers[guild.id].prefix = prefix;
                 message.channel.send("The prefix is now: " + saveJson.servers[guild.id].prefix);
             } else {

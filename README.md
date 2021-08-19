@@ -31,8 +31,14 @@
 
 - [x] Change the upvote/downvote emojis
 
+- [ ] Add familys marry stuff! (Free MarriageBot)
+
 
 # Updates
+
+### 0.0.2
+
+- Better command thingys
 
 ### 0.0.1.1
 

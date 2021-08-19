@@ -4,7 +4,7 @@ module.exports = {
     name: 'suggest',
     description: 'Stops the bot',
     execute(client, Discord, message, guild) {
-        var rawdata = fs.readFileSync('./data.json');
+        var rawdata = fs.readFileSync('../data.json');
         //Use
         var data = JSON.parse(rawdata);
 
