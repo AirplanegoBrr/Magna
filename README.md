@@ -1,4 +1,5 @@
-# Better-Suggestion-Bot
+# Magna Bot
+### As of 8/31/2021 I am no longer working on Magna bot. A whole rewrite is needed for slash commands
 
 ## The Devs:
 
