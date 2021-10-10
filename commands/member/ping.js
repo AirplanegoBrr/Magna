@@ -1,6 +1,11 @@
 module.exports = {
     name: 'ping',
     description: 'ping command.',
+    long_description: 'Gets bots ping to discord',
+    permissions: [],
+    args: ['null'],
+    usage: 'ping',
+    type: 'member',
     execute(client, Discord, message, guild) {
         const Embed = new Discord.MessageEmbed()
             .setColor('#0099ff')

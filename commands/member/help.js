@@ -1,43 +1,84 @@
 module.exports = {
     name: 'help',
     description: 'help command.',
+    long_description: 'Help command.... what else??',
+    permissions: [],
+    args: ['command'],
+    usage: 'help <command>',
+    type: 'member',
     execute(client, Discord, message, guild) {
-        const example = new Discord.MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle("Help")
-            //.setURL()
-            .setAuthor(message.author.username, message.author.avatarURL(), message.author.avatarURL())
-            //.setDescription("Server: " + guild.name + "\nServerID:" + guild.id + "\nMember Count:" + guild.memberCount)
-            .setTimestamp()
-            .setFooter('Bot by !!AirplaneGoBrr!!#1613', 'https://cdn.discordapp.com/avatars/250029754076495874/bdf3953b71edb421776e43d24e7651fe.webp');
+        //Go through each command in client.commands and put them in an embed with there description
+        var x = message.content.split(" ").slice(1).join(" ")
+        var y = message.content.split(" ")
 
-
-        const Embed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle("Help command")
-            .setURL("https://cdn.discordapp.com/avatars/250029754076495874/bdf3953b71edb421776e43d24e7651fe.webp")
-            .setAuthor(message.author.username, message.author.avatarURL(), message.author.avatarURL())
-            //.setDescription('Some description here')
-            //.setThumbnail('https://i.imgur.com/wSTFkRM.png')
-            .addFields(
-                //{ name: 'Regular field title', value: 'Some value here' },
-                //{ name: '\u200B', value: '\u200B' },
-                //{ name: 'Inline field title', value: 'Some value here', inline: true },
-                //{ name: 'Inline field title', value: 'Some value here', inline: true },
-                { name: "help" , value: "Shows this message!", inline: true },
-                { name: "suggest", value: "Suggest a suggestion!", inline: true },
-                { name: "Admin Commands"},
-                { name: "channel", value: "set the suggestion channel (this will be replaced with config!)"},
-                { name: "kick", value: "Kick the pinged user. Will send them a DM"},
-                { name: "unban", value: "unban the ID of the user (needs the users ID)"},
-                { name: "ban", value: "Ban the pinged user. Will send them a DM"},
-                { name: "config", value: "Set some stuff!"}
-            )
-           //.setImage('https://i.imgur.com/wSTFkRM.png')
-            .setTimestamp()
-            .setFooter('Bot by !!AirplaneGoBrr!!#1613', 'https://cdn.discordapp.com/avatars/250029754076495874/bdf3953b71edb421776e43d24e7651fe.webp');
-
-        message.channel.send(Embed);
+        if (!y[1]){
+            blacklist = ["webhook", "commandnamehere", "help", "shop"]
+            var done = new Array()
+            const embed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle('Help')
+                .setDescription('Here is a list of commands and their descriptions.')
+                .setTimestamp();
+            client.commands.forEach(command => {
+                //Check if is in blacklist
+                if (blacklist.includes(command.name)) return;
+                //Add feild without description basied on type annd pull all commands matching type
+                switch (command.type) {
+                    case "admin":
+                        if (!done.includes("admin")){
+                            embed.addField('Admin Commands', '\u200b')
+                            done.push("admin")
+                        }
+                        embed.addField(`${command.name || 'error'}`, `${command.description || 'error'}` || 'big error')
+                        break;
+                    case "mod":
+                        if (!done.includes("mod")){
+                            embed.addField('Moderator Commands', '\u200b')
+                            done.push("mod")
+                        }
+                        embed.addField(`${command.name || 'error'}`, `${command.description || 'error'}` || 'big error')
+                        break;
+                    case "member":
+                        if (!done.includes("member")){
+                            embed.addField('Member Commands', '\u200b')
+                            done.push("member")
+                        }
+                        embed.addField(`${command.name || 'error'}`, `${command.description || 'error'}` || 'big error')
+                        break;
+                    case "ticket":
+                        if (!done.includes("ticket")){
+                            embed.addField('Ticket Commands', '\u200b')
+                            done.push("ticket")
+                        }
+                        embed.addField(`${command.name || 'error'}`, `${command.description || 'error'}` || 'big error')
+                        break;
+                    default:
+                        if (!done.includes("errors")){
+                            embed.addField(' ', '\u200b')
+                            done.push("errors")
+                        }
+                        embed.addField(`${command.name || 'error'}`, `${command.description || 'error'}` || 'big error')
+                        break;
+                }
+            });
+            message.channel.send(embed);
+        } else {
+            // Give detals for command
+            var embed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle(x)
+                .addField('Description', client.commands.get(x).description || 'No Permissions')
+                .addField('Long Description', client.commands.get(x).long_description || 'No Long Description')
+                .addField('Usage', client.commands.get(x).usage || 'No Usage')
+                .addField('Type', client.commands.get(x).type || 'No Type')
+                .addField('Args', client.commands.get(x).args || 'No Args')
+                .setTimestamp();
+            if (client.commands.get(x).type == "admin") embed.setColor('#ff0000')
+            if (client.commands.get(x).type == "mod") embed.setColor('#ff9900')
+            if (client.commands.get(x).type == "member") embed.setColor('#0099ff')
+            if (client.commands.get(x).type == "ticket") embed.setColor('#00ff00')
+            message.channel.send(embed);
+        }
 
     }
-}
+};

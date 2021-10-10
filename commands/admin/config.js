@@ -1,24 +1,16 @@
 const fs = require("fs")
+const other = require("../../other")
 
 module.exports = {
     name: 'config',
     description: 'config command.',
+    long_description: 'Config for channels, emojis and ECT',
+    permissions: ["MANAGE_CHANNELS"],
+    args: ['value', 'set'],
+    usage: 'config <value> <value>',
+    type: 'admin',
     execute(client, Discord, message, guild) {
-        var rawdata = fs.readFileSync('../data.json');
-        //Use
-        var data = JSON.parse(rawdata);
 
-        //Will add old data so we can edit it
-        var saveJson = data;
-
-        if (saveJson.servers) {
-        } else {
-            saveJson.servers = {}
-        }
-        if (saveJson.servers[guild.id]) {
-        } else {
-            saveJson.servers[guild.id] = {}
-        }
 
         var x = message.content.split(" ").slice(1).join(" ")
         var y = message.content.split(" ")
@@ -30,71 +22,53 @@ module.exports = {
         };
 
         if (!x) {
-            message.channel.send("```diff\n+ Config options\n- suggestion_channel\n- prefix\n- upvote\n- downvote``` suggestion_channel isnt working atm")
+            message.channel.send("```diff\n+ Config options\n- suggestion_channel\n- prefix\n- upvote\n- downvote```")
         } else {
-            if (saveJson.servers) {
-            } else {
-                saveJson.servers = {}
-                saveJson.servers[guild.id] = {}
-                save(saveJson);
-            }
         }
+        other.make(guild.id)
 
-        if (y[1] == "prefix") {
-            if (!y[2]) {
-                var { prefix } = require("../../config.json")
-                saveJson.servers[guild.id].prefix = prefix;
-                message.channel.send("The prefix is now: " + saveJson.servers[guild.id].prefix);
-            } else {
-                saveJson.servers[guild.id].prefix = y[2]
-                message.channel.send("The prefix is now: " + saveJson.servers[guild.id].prefix);
-            }
-            save(saveJson);
-        }
-
-        if (y[1] == "upvote") {
-            if (!y[2]) {
-                saveJson.servers[guild.id].upvote = "👍"
-                message.channel.send("Upvote: " + saveJson.servers[guild.id].upvote);
-            } else {
-                saveJson.servers[guild.id].upvote = y[2];
-                message.channel.send("Upvote: " + saveJson.servers[guild.id].upvote);
-            }
-            save(saveJson);
-        }
-
-        if (y[1] == "downvote") {
-            if (!y[2]) {
-                saveJson.servers[guild.id].downvote = "👎";
-                message.channel.send("Downvote: " + saveJson.servers[guild.id].downvote);
-            } else {
-                saveJson.servers[guild.id].downvote = y[2];
-                message.channel.send("Downvote: " + saveJson.servers[guild.id].downvote);
-            }
-            save(saveJson);
-
-        }
-
-        if (y[1] == "suggestion_channel") {
-            saveJson.servers[guild.id].suggestChannel = message.mentions.channels.first().id;
-            message.channel.send("Set suggest channel to: <#" + saveJson.servers[guild.id].suggestChannel + ">");
-            console.log("good")
-            save(saveJson);
-        }
-
-        save(saveJson);
-
-        function save(saveJson) {
-            var save = JSON.stringify(saveJson);
-            //fs.writeFileSync("./data.json", save);
-            
-            fs.writeFile('./data.json', save, err => {
-                if (err) {
-                  console.error(err)
-                  return
+        switch (y[1]) {
+            case "prefix":
+                if (!y[2]) {
+                    var { prefix } = require("../../config.json")
+                    saveJson.servers[guild.id].prefix = prefix;
+                    message.channel.send("The prefix is now: " + saveJson.servers[guild.id].prefix);
+                } else {
+                    saveJson.servers[guild.id].prefix = y[2]
+                    message.channel.send("The prefix is now: " + saveJson.servers[guild.id].prefix);
                 }
-                //file written successfully
-              })
-        }
+                save(saveJson);
+                break;
+            case "upvote":
+                if (!y[2]) {
+                    saveJson.servers[guild.id].upvote = "👍"
+                    message.channel.send("Upvote: " + saveJson.servers[guild.id].upvote);
+                } else {
+                    saveJson.servers[guild.id].upvote = y[2];
+                    message.channel.send("Upvote: " + saveJson.servers[guild.id].upvote);
+                }
+                save(saveJson);
+                break;
+            case "downvote":
+                if (!y[2]) {
+                    saveJson.servers[guild.id].downvote = "👎";
+                    message.channel.send("Downvote: " + saveJson.servers[guild.id].downvote);
+                } else {
+                    saveJson.servers[guild.id].downvote = y[2];
+                    message.channel.send("Downvote: " + saveJson.servers[guild.id].downvote);
+                }
+                save(saveJson);
+
+                break;
+            case "suggestion_channel":
+                saveJson.servers[guild.id].suggestChannel = message.mentions.channels.first().id;
+                message.channel.send("Set suggest channel to: <#" + saveJson.servers[guild.id].suggestChannel + ">");
+                console.log("good")
+                save(saveJson);
+                break
+            default:
+                message.channel.send("```diff\n+ Config options\n- suggestion_channel\n- prefix\n- upvote\n- downvote```")
+                break;
+            }
     }
 }

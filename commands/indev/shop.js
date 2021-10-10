@@ -1,6 +1,10 @@
 module.exports = {
     name: 'shop',
     description: 'shop command.',
+    permissions: [],
+    args: [],
+    usage: '',
+    type: 'indev',
     execute(client, Discord, message, guild) {
         const { owner } = require("../config.json");
         if (!message.author.id == owner) {

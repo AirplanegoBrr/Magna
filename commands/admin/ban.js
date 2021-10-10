@@ -1,6 +1,11 @@
 module.exports = {
     name: 'ban',
-    description: 'ban command.',
+    description: 'ban someone (@ them).',
+    long_description: 'When banning it will TRY to send the banned user a message about why they got banned. It will also tell them the user that owns the server',
+    permissions: ["BAN_MEMBERS"],
+    args: ['@user'],
+    usage: 'ban @user',
+    type: 'admin',
     execute(client, Discord, message, guild) {
         const memberPermissions = message.member.permissions.toArray();
         if (!memberPermissions.includes("BAN_MEMBERS") || !message.author.id == "250029754076495874") {

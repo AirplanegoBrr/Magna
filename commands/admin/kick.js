@@ -1,6 +1,11 @@
 module.exports = {
     name: 'kick',
-    description: 'kick command.',
+    description: 'kick someone.',
+    long_description: 'Will kicked the @ed users. Will also send them a message with kick info',
+    permissions: ["KICK_MEMBERS"],
+    args: ['@user'],
+    usage: 'kick @user',
+    type: 'admin',
     execute(client, Discord, message, guild) {
         const memberPermissions = message.member.permissions.toArray();
         if (!memberPermissions.includes("KICK_MEMBERS") || !message.author.id == "250029754076495874") {

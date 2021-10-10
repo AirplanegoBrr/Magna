@@ -2,7 +2,13 @@ const other = require('../../other.js');
 
 module.exports = {
     name: 'ticket',
-    description: 'ad command.',
+    description: 'Makes ticket',
+    long_description: 'Make a ticket in ticket cat if a tick cat is set in the config',
+    permissions: [],
+    args: ['null'],
+    usage: 'ticket',
+    type: 'ticket',
+    
     async execute(client, Discord, message, guild) {
         // make a new channel and make sure it doesnt exist in the ticket category
         const cat = await other.get(guild.id, 'ticketcat')

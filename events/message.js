@@ -1,11 +1,11 @@
 const fs = require("fs")
+const other = require("../other")
 
 module.exports = {
     name: 'message',
-    execute(message, client, Discord) {
+    async execute(message, client, Discord) {
         const { token, owner, debugMode } = require("../config.json");
         var { prefix } = require("../config.json")
-        var rawdata = fs.readFileSync('./data.json');
 
         if (message.author.bot) return;
         if (message.guild === null) {
@@ -16,23 +16,10 @@ module.exports = {
         const member = message.author;
         const guild = message.guild;
 
-        //Use
-        var data = JSON.parse(rawdata);
+        other.make(guild.id)
 
-        //Will add old data so we can edit it
-        var saveJson = data;
-
-        if (saveJson.servers){
-        }else{
-            saveJson.servers = {}
-        }
-        if (saveJson.servers[guild.id]){
-        }else{
-            saveJson.servers[guild.id] = {}
-        }
-
-        if (saveJson.servers[guild.id].prefix){
-            prefix = saveJson.servers[guild.id].prefix
+        if (await other.get(guild.id, "prefix") != null || await other.get(guild.id, "prefix") != undefined) {
+            prefix = await other.get(guild.id, "prefix")
         }
 
 
@@ -54,7 +41,34 @@ module.exports = {
         //Checks if message has the prefix
         if (!message.content.startsWith(prefix)) return;
         //Checks if there is a command with that name
-        if (!client.commands.has(command)) return;
+        if (!client.commands.has(command)) {
+            message.channel.send("I don't know that command!");
+            return;
+        }
+        //Check if member has permission to use that command
+
+        function hasPermission(list) {
+            arr = new Array();
+            if (list == arr) {
+                arr.push(true);
+            } else {
+                list.forEach(val => {
+                    if (message.member.hasPermission(val)) {
+                        // Has permission
+                        arr.push(true);
+                    } else {
+                        //Doesn't have permission
+                        arr.push(false);
+                    }
+                });
+            }
+            return !arr.includes(false);
+        }
+
+        if (!hasPermission(client.commands.get(command).permissions)) {
+            message.channel.send("You do not have permission to use this command!\n" + client.commands.get(command).permissions.toString());
+            return;
+        }
 
         try {
             client.commands.get(command).execute(client, Discord, message, guild);
@@ -62,8 +76,5 @@ module.exports = {
             console.error(error);
             message.reply(`there was an error trying to execute that command!`);
         }
-
-        var save = JSON.stringify(saveJson);
-        fs.writeFileSync('./data.json', save);
     },
 };
