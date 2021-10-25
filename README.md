@@ -36,6 +36,12 @@
 
 # Updates
 
+### 0.0.3
+
+- Update to the whole config system! now data saving/getting using other.js!
+
+- Added rules
+
 ### 0.0.2
 
 - Better command thingys

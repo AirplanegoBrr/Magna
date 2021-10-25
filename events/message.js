@@ -42,6 +42,7 @@ module.exports = {
         if (!message.content.startsWith(prefix)) return;
         //Checks if there is a command with that name
         if (!client.commands.has(command)) {
+            console.log(command)
             message.channel.send("I don't know that command!");
             return;
         }

@@ -10,7 +10,8 @@ module.exports = {
     usage: 'suggest <suggestion>',
     type: 'member',
     async execute(client, Discord, message, guild) {
-        var channel = await other.get(guild.id, "suggestChannel")
+        var channelID = await other.get(guild.id, "suggestion_channel")
+        var channel = message.guild.channels.cache.find(channel => channel.id === channelID)
         if (channel) {
             var x = message.content.split(" ").slice(1).join(" ");
             const exampleEmbed = new Discord.MessageEmbed()
@@ -22,19 +23,20 @@ module.exports = {
                 .setTimestamp()
                 .setFooter('Bot by !!AirplaneGoBrr!!#1613', 'https://cdn.discordapp.com/avatars/250029754076495874/bdf3953b71edb421776e43d24e7651fe.webp');
 
-            guild.channels.cache.get(channel).send(exampleEmbed)
-                .then(function (message) {
-                    var upvote = other.get(guild.id, "upvote");
-                    var downvote = other.get(guild.id, "downvote");
+            channel.send(exampleEmbed)
+                .then(async (sugMsg)=> {
+                    var upvote = await other.get(guild.id, "upvote");
+                    var downvote = await other.get(guild.id, "downvote");
                     if (upvote || downvote) {
-                        message.react(upvote);
-                        message.react(downvote);
+                        sugMsg.react(upvote);
+                        sugMsg.react(downvote);
                     } else {
-                        message.react("👍");
-                        message.react("👎");
+                        sugMsg.react("👍");
+                        sugMsg.react("👎");
                     }
 
-                }).catch(function () {
+                }).catch((err)=> {
+                    console.log(err)
                     //Something
                 });
 
