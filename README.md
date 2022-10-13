@@ -1,5 +1,9 @@
 # Magna Bot
 
+## This is being retired!
+
+This repo is being retired, A complete re-code of the bot will be underway [Here](https://github.com/AirplaneGobrr-Trash/Magna-bot)
+
 ## The Devs:
 
 ### [AirplaneGoBrr](https://github.com/AirplaneGoBrr)
